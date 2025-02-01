@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi, I'm NotArya</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styling */
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0.1)); /* Subtle gradient from white to light black */
-            color: #333; /* Adjust text color for better visibility */
-        }
-        .hero-text {
-            font-weight: 500;
-        }
-        .highlight {
-            font-weight: 700;
-        }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0.1));
+        color: #333;
+      }
+
+      .hero-text {
+        font-weight: 500;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .highlight {
+        font-weight: 700;
+        display: inline-block;
+        /* Allow transitions on inline elements */
+        opacity: 1;
+        /* Ensure "random stuff" is visible initially */
+        transition: opacity 0.6s ease-out;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <header class="flex justify-between items-center p-8">
-        <nav>
-            <ul class="flex space-x-8 text-lg">
-                <li><a href="#about" class="text-gray-600 hover:text-black">Discord</a></li>
-                <li><a href="#contact" class="text-gray-600 hover:text-black">GitHub</a></li>
-            </ul>
-        </nav>
-        <div class="text-3xl font-bold text-black">NotArya</div>
+      <nav>
+        <ul class="flex space-x-8 text-lg">
+          <li>
+            <a href="#about" class="text-gray-600 hover:text-black">Discord</a>
+          </li>
+          <li>
+            <a href="https://github.com/n8tarya" class="text-gray-600 hover:text-black">GitHub</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="text-3xl font-bold text-black">NotArya</div>
     </header>
-
     <section class="flex flex-col items-center justify-center min-h-screen text-center px-4">
-        <h1 class="hero-text text-4xl md:text-5xl mb-4 text-black">
-            Hi, I'm Arya – I create <span class="highlight">random stuff</span> on the Internet.
-        </h1>
-        <p class="hero-text text-xl md:text-2xl text-gray-700">
-            I enjoy coding and playing video games, and I love creating innovative Linux scripts and Python programs.
-        </p>
+      <h1 class="hero-text text-4xl md:text-5xl mb-4 text-black"> Hi, I'm Arya – I create <span id="dynamicText" class="highlight">random stuff</span> on the Internet. </h1>
+      <p class="hero-text text-xl md:text-2xl text-gray-700"> I enjoy coding and playing video games, and I love creating innovative Linux scripts and Python programs. </p>
     </section>
-
     <footer class="bg-gray-900 text-white text-center py-4">
-        <p>&copy; 2025 NotArya. All rights reserved.</p>
+      <p>&copy; 2025 NotArya. All rights reserved.</p>
     </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const heroText = document.querySelectorAll('.hero-text');
+        const dynamicText = document.getElementById('dynamicText');
+        // Initial fade-in for hero text
+        heroText.forEach((element) => {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        });
+        // Array of phrases to display
+        const phrases = ["Linux scripts", "Python programs", "web applications", "cool projects"];
+        let currentIndex = 0;
 
-</body>
+        function changeText() {
+          // Fade out current text
+          dynamicText.style.opacity = '0';
+          setTimeout(() => {
+            // Change the text after fade out
+            currentIndex = (currentIndex + 1) % phrases.length; // Cycle through phrases
+            dynamicText.textContent = phrases[currentIndex];
+            // Fade in new text
+            dynamicText.style.opacity = '1';
+          }, 600); // Match this timeout with the CSS transition duration
+        }
+        setInterval(changeText, 5000); // Change text every 5 seconds
+      });
+    </script>
+  </body>
 </html>
