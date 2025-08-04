@@ -1,82 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi, I'm NotArya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NotArya</title>
+    <link id="dynamic-favicon" rel="icon" href="" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+      :root {
+        --mocha-base: #1e1e2e;
+        --mocha-mantle: #181825;
+        --mocha-surface0: #313244;
+        --mocha-surface1: #45475a;
+        --mocha-text: #cdd6f4;
+        --mocha-subtext: #a6adc8;
+        --mocha-blue: #89b4fa;
+        --mocha-lavender: #b4befe;
+        --mocha-rosewater: #f5e0dc;
+        --mocha-overlay: rgba(24, 24, 37, 0.8);
+      }
+
       body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0.1));
-        color: #333;
+        font-family: 'JetBrains Mono', sans-serif;
+        background-color: var(--mocha-base);
+        color: var(--mocha-text);
       }
 
-      .hero-text {
-        font-weight: 500;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      .liquid-glass {
+        background-color: var(--mocha-mantle);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 3px solid #9399b2;
       }
 
-      .highlight {
-        font-weight: 700;
-        display: inline-block;
-        /* Allow transitions on inline elements */
-        opacity: 1;
-        /* Ensure "random stuff" is visible initially */
-        transition: opacity 0.6s ease-out;
+      .link-underline {
+        position: relative;
+        color: var(--mocha-lavender);
+        font-weight: 600;
+        transition: color 0.25s ease;
+        cursor: pointer;
+      }
+
+      .link-underline::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        bottom: -3px;
+        left: 0;
+        background: var(--mocha-lavender);
+        transform-origin: right;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        border-radius: 1px;
+      }
+
+      .link-underline:hover,
+      .link-underline:focus-visible {
+        color: var(--mocha-blue);
+        outline: none;
+      }
+
+      .link-underline:hover::after,
+      .link-underline:focus-visible::after {
+        transform-origin: left;
+        transform: scaleX(1);
+      }
+
+      .scrolling-wrapper {
+        overflow: hidden;
+        position: relative;
+      }
+
+      @keyframes scrollLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .scrolling-content {
+        display: flex;
+        width: 200%;
+        animation: scrollLeft 25s linear infinite;
+        gap: 2rem;
+      }
+
+      .scrolling-content > i,
+      .scrolling-content > img {
+        flex-shrink: 0;
+        font-size: 2.5rem;
+        transition: transform 0.3s ease;
+        cursor: default;
+      }
+
+      .scrolling-content > i:hover,
+      .scrolling-content > img:hover {
+        transform: scale(1.2);
+      }
+
+      .linux-logo {
+        width: 2rem;
+        height: 3rem;
+        object-fit: contain;
+        user-select: none;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+      }
+
+      @media (max-width: 640px) {
+        .scrolling-content {
+          font-size: 2rem;
+        }
       }
     </style>
   </head>
-  <body>
-    <header class="flex justify-between items-center p-8">
-      <nav>
-        <ul class="flex space-x-8 text-lg">
-          <li>
-            <a href="#about" class="text-gray-600 hover:text-black">Discord</a>
-          </li>
-          <li>
-            <a href="https://github.com/n8tarya" class="text-gray-600 hover:text-black">GitHub</a>
-          </li>
-        </ul>
-      </nav>
-      <div class="text-3xl font-bold text-black">NotArya</div>
-    </header>
-    <section class="flex flex-col items-center justify-center min-h-screen text-center px-4">
-      <h1 class="hero-text text-4xl md:text-5xl mb-4 text-black"> Hi, I'm Arya – I create <span id="dynamicText" class="highlight">random stuff</span> on the Internet. </h1>
-      <p class="hero-text text-xl md:text-2xl text-gray-700"> I enjoy coding and playing video games, and I love creating innovative Linux scripts and Python programs. </p>
-    </section>
-    <footer class="bg-gray-900 text-white text-center py-4">
-      <p>&copy; 2025 NotArya. All rights reserved.</p>
-    </footer>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const heroText = document.querySelectorAll('.hero-text');
-        const dynamicText = document.getElementById('dynamicText');
-        // Initial fade-in for hero text
-        heroText.forEach((element) => {
-          element.style.opacity = '1';
-          element.style.transform = 'translateY(0)';
-        });
-        // Array of phrases to display
-        const phrases = ["Linux scripts", "Python programs", "web applications", "cool projects"];
-        let currentIndex = 0;
+  <body class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-14 py-10 sm:py-14">
+    <main class="liquid-glass w-full max-w-4xl p-6 sm:p-10 space-y-10 sm:space-y-14">
+      <header class="text-center sm:text-left">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">NotArya</h1>
+        <p class="text-lg sm:text-xl text-subtle mt-1 tracking-wide font-semibold text-[var(--mocha-subtext)]">Distro-hopper and gamer.</p>
+      </header>
+      <section class="space-y-5 sm:space-y-6 text-[var(--mocha-text)] text-base sm:text-lg font-medium leading-relaxed text-center sm:text-left">
+        <p>Hey! My name is Arya and I mostly code cool random things on the Internet (like random Linux scripts, websites and much more.)</p>
+        <p>I've used a lot of different Linux distros in my life, but Arch has been the best for me — and now I'm just sticking with arch.</p>
+      </section>
+        <section>
+        <h2 class="text-2xl sm:text-3xl font-semibold border-b border-[var(--mocha-surface1)] pb-1 mb-6 tracking-wide">Distro-hop list</h2>
+        <div class="scrolling-wrapper">
+          <div class="scrolling-content">
+            <img src="icons/ubuntu.png" alt="Ubuntu" title="Ubuntu" role="listitem" class="linux-logo" />
+            <img src="icons/mint.png" alt="Linux Mint" title="Linux Mint" role="listitem" class="linux-logo" />
+            <img src="icons/fedora.png" alt="Fedora" title="Fedora" role="listitem" class="linux-logo" />
+            <img src="icons/chromeos.png" alt="Chrome OS" title="Chrome OS" role="listitem" class="linux-logo" />
+            <img src="icons/endeavouros.png" alt="EndeavourOS" title="EndeavourOS" role="listitem" class="linux-logo" />
+            <img src="icons/void_linux.png" alt="Void Linux" title="Void Linux" role="listitem" class="linux-logo" />
+            <img src="icons/nixos.png" alt="NixOS" title="NixOS" role="listitem" class="linux-logo" />
+            <img src="icons/opensuse.png" alt="openSUSE" title="openSUSE" role="listitem" class="linux-logo" />
+            <img src="icons/garuda.png" alt="Garuda Linux" title="Garuda Linux" role="listitem" class="linux-logo" />
+            <img src="icons/alpine_linux.png" alt="Alpine Linux" title="Alpine Linux" role="listitem" class="linux-logo" />
+            <img src="icons/arch_linux.png" alt="Arch Linux" title="Arch Linux" role="listitem" class="linux-logo" />
+            <img src="icons/manjaro.png" alt="Manjaro" title="Manjaro" role="listitem" class="linux-logo" />
+            <img src="icons/nobara.png" alt="Nobara" title="Nobara" role="listitem" class="linux-logo" />
+            <img src="icons/cachy_os.png" alt="CachyOS" title="CachyOS" role="listitem" class="linux-logo" />
+            <img src="icons/pop_os.png" alt="Pop!_OS" title="Pop!_OS" role="listitem" class="linux-logo" />
+            <img src="icons/ubuntu.png" alt="Ubuntu" title="Ubuntu" role="listitem" class="linux-logo" />
+            <img src="icons/mint.png" alt="Linux Mint" title="Linux Mint" role="listitem" class="linux-logo" />
+            <img src="icons/fedora.png" alt="Fedora" title="Fedora" role="listitem" class="linux-logo" />
+            <img src="icons/chromeos.png" alt="Chrome OS" title="Chrome OS" role="listitem" class="linux-logo" />
+            <img src="icons/endeavouros.png" alt="EndeavourOS" title="EndeavourOS" role="listitem" class="linux-logo" />
+            <img src="icons/void_linux.png" alt="Void Linux" title="Void Linux" role="listitem" class="linux-logo" />
+            <img src="icons/nixos.png" alt="NixOS" title="NixOS" role="listitem" class="linux-logo" />
+            <img src="icons/opensuse.png" alt="openSUSE" title="openSUSE" role="listitem" class="linux-logo" />
+            <img src="icons/garuda.png" alt="Garuda Linux" title="Garuda Linux" role="listitem" class="linux-logo" />
+            <img src="icons/alpine_linux.png" alt="Alpine Linux" title="Alpine Linux" role="listitem" class="linux-logo" />
+            <img src="icons/arch_linux.png" alt="Arch Linux" title="Arch Linux" role="listitem" class="linux-logo" />
+            <img src="icons/manjaro.png" alt="Manjaro" title="Manjaro" role="listitem" class="linux-logo" />
+            <img src="icons/nobara.png" alt="Nobara" title="Nobara" role="listitem" class="linux-logo" />
+            <img src="icons/cachy_os.png" alt="CachyOS" title="CachyOS" role="listitem" class="linux-logo" />
+            <img src="icons/pop_os.png" alt="Pop!_OS" title="Pop!_OS" role="listitem" class="linux-logo" />
+          </div>
+        </div>
+      </section>
+     <section class="text-center sm:text-left">
+  <h2 class="text-2xl sm:text-3xl font-semibold border-b border-[var(--mocha-surface1)] pb-1 mb-6 tracking-wide">
+    Really Useful Info
+  </h2>
+  <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+    <img src="https://api.statusbadges.me/badge/status/933613340876505118?style=plastic" alt="status">
+    <img src="https://api.statusbadges.me/badge/playing/933613340876505118?style=plastic" alt="playing">
+    <img src="https://api.statusbadges.me/badge/vscode/933613340876505118?style=plastic" alt="vscode">
+    <a href="https://api.statusbadges.me/openspotify/933613340876505118?style=plastic" target="_blank" rel="noopener">
+      <img src="https://api.statusbadges.me/badge/spotify/933613340876505118?style=plastic" alt="spotify">
+    </a>
+  </div>
+</section>
 
-        function changeText() {
-          // Fade out current text
-          dynamicText.style.opacity = '0';
-          setTimeout(() => {
-            // Change the text after fade out
-            currentIndex = (currentIndex + 1) % phrases.length; // Cycle through phrases
-            dynamicText.textContent = phrases[currentIndex];
-            // Fade in new text
-            dynamicText.style.opacity = '1';
-          }, 600); // Match this timeout with the CSS transition duration
-        }
-        setInterval(changeText, 5000); // Change text every 5 seconds
-      });
+    </main>
+    <script>
+      const word = "hello!";
+      const interval = 1000;
+      const faviconId = "dynamic-favicon";
+
+      function createFavicon(letter) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#1e1e2e";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#f5e0dc";
+        ctx.font = "bold 48px JetBrains Mono, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(letter, canvas.width / 2, canvas.height / 2);
+        return canvas.toDataURL("image/png");
+      }
+
+      function cycleFavicon(word, interval) {
+        let index = 0;
+        const link = document.getElementById(faviconId);
+        setInterval(() => {
+          const letter = word[index % word.length];
+          const faviconURL = createFavicon(letter);
+          link.href = faviconURL;
+          index++;
+        }, interval);
+      }
+
+      cycleFavicon(word, interval);
     </script>
   </body>
 </html>
