@@ -85,6 +85,7 @@
         0% {
           transform: translateX(0);
         }
+
         100% {
           transform: translateX(-50%);
         }
@@ -97,16 +98,16 @@
         gap: 2rem;
       }
 
-      .scrolling-content > i,
-      .scrolling-content > img {
+      .scrolling-content>i,
+      .scrolling-content>img {
         flex-shrink: 0;
         font-size: 2.5rem;
         transition: transform 0.3s ease;
         cursor: default;
       }
 
-      .scrolling-content > i:hover,
-      .scrolling-content > img:hover {
+      .scrolling-content>i:hover,
+      .scrolling-content>img:hover {
         transform: scale(1.2);
       }
 
@@ -126,6 +127,10 @@
     </style>
   </head>
   <body class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-14 py-10 sm:py-14">
+    <div id="loading-overlay" class="fixed inset-0 flex items-center justify-center bg-[var(--mocha-base)] text-[var(--mocha-text)] z-50">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[var(--mocha-lavender)]"></div>
+      <span class="ml-4 text-lg font-semibold">Loading icons...</span>
+    </div>
     <main class="liquid-glass w-full max-w-4xl p-6 sm:p-10 space-y-10 sm:space-y-14">
       <header class="text-center sm:text-left">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">NotArya</h1>
@@ -135,7 +140,7 @@
         <p>Hey! My name is Arya and I mostly code cool random things on the Internet (like random Linux scripts, websites and much more.)</p>
         <p>I've used a lot of different Linux distros in my life, but Arch has been the best for me — and now I'm just sticking with arch.</p>
       </section>
-        <section>
+      <section>
         <h2 class="text-2xl sm:text-3xl font-semibold border-b border-[var(--mocha-surface1)] pb-1 mb-6 tracking-wide">Distro-hop list</h2>
         <div class="scrolling-wrapper">
           <div class="scrolling-content">
@@ -172,20 +177,17 @@
           </div>
         </div>
       </section>
-     <section class="text-center sm:text-left">
-  <h2 class="text-2xl sm:text-3xl font-semibold border-b border-[var(--mocha-surface1)] pb-1 mb-6 tracking-wide">
-    Really Useful Info
-  </h2>
-  <div class="flex flex-wrap justify-center sm:justify-start gap-4">
-    <img src="https://api.statusbadges.me/badge/status/933613340876505118?style=plastic" alt="status">
-    <img src="https://api.statusbadges.me/badge/playing/933613340876505118?style=plastic" alt="playing">
-    <img src="https://api.statusbadges.me/badge/vscode/933613340876505118?style=plastic" alt="vscode">
-    <a href="https://api.statusbadges.me/openspotify/933613340876505118?style=plastic" target="_blank" rel="noopener">
-      <img src="https://api.statusbadges.me/badge/spotify/933613340876505118?style=plastic" alt="spotify">
-    </a>
-  </div>
-</section>
-
+      <section class="text-center sm:text-left">
+        <h2 class="text-2xl sm:text-3xl font-semibold border-b border-[var(--mocha-surface1)] pb-1 mb-6 tracking-wide"> Really Useful Info </h2>
+        <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+          <img src="https://api.statusbadges.me/badge/status/933613340876505118?style=plastic" alt="status">
+          <img src="https://api.statusbadges.me/badge/playing/933613340876505118?style=plastic" alt="playing">
+          <img src="https://api.statusbadges.me/badge/vscode/933613340876505118?style=plastic" alt="vscode">
+          <a href="https://api.statusbadges.me/openspotify/933613340876505118?style=plastic" target="_blank" rel="noopener">
+            <img src="https://api.statusbadges.me/badge/spotify/933613340876505118?style=plastic" alt="spotify">
+          </a>
+        </div>
+      </section>
     </main>
     <script>
       const word = "hello!";
@@ -217,7 +219,37 @@
           index++;
         }, interval);
       }
-
+      window.addEventListener('load', () => {
+        const overlay = document.getElementById('loading-overlay');
+        const images = document.querySelectorAll('.linux-logo');
+        let loadedCount = 0;
+        const totalImages = images.length;
+        images.forEach(img => {
+          if (img.complete) {
+            loadedCount++;
+          } else {
+            img.addEventListener('load', () => {
+              loadedCount++;
+              if (loadedCount === totalImages) {
+                overlay.style.display = 'none';
+              }
+            });
+            img.addEventListener('error', () => {
+              loadedCount++;
+              if (loadedCount === totalImages) {
+                overlay.style.display = 'none';
+              }
+            });
+          }
+        });
+        if (loadedCount === totalImages) {
+          overlay.style.display = 'none';
+        }
+      });
+      document.body.classList.add('overflow-hidden');
+      window.addEventListener('load', () => {
+        document.body.classList.remove('overflow-hidden');
+      });
       cycleFavicon(word, interval);
     </script>
   </body>
